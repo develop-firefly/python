@@ -1,7 +1,10 @@
-# Method to fetch first row of sql output
-# Argument to this method is: SQL Query or Variable containing the SQL query
-# Note: Order of the result is driven by sql query
 def db_execute_sql_fetch_top_row_as_list_m2(self, _sql_query_or_sql_variable):
+    '''
+    Method to fetch first row of sql output
+    Argument to this method is: SQL Query or Variable containing the SQL query
+    Note: Order of the result is driven by sql query
+    Return type of this method is a list
+    '''
     # Open the cursor as 'with' so, it's automatically closed upon task completion
     with self.db_auto_connect.cursor(scrollable=True) as cursor:
         '''
