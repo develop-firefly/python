@@ -1,7 +1,10 @@
-# Method to fetch specific row number of sql output
-# Argument to this method is: SQL Query or Variable containing the SQL query and row number
-# Note: Order of the result is driven by sql query
 def db_execute_qry_fetch_specific_row_as_dict(self, _sql_query_or_sql_variable, _row_idx):
+    '''
+    Method to fetch specific row number of sql output
+    Argument to this method is: SQL Query or Variable containing the SQL query and row number
+    Note: Order of the result is driven by sql query
+    Return type of this method is a dictionary
+    '''
     with self.db_auto_connect.cursor(scrollable=True) as cursor:
         '''
         If you are fetching a fixed number of rows, start your tuning by setting arraysize to the number of expected 
