@@ -1,7 +1,7 @@
-# Import cx_Oracle package: This is Python API for Oracle DB connection and Transaction
+# Import cx_oracle package: This is Python API for Oracle DB connection and Transaction
 import sys
 
-import cx_Oracle
+import cx_oracle
 
 # Import the configuration file to read th attributes and values utilized in the class
 import db_conf
@@ -32,9 +32,9 @@ class CustomCxOracle:
     def __init__(self, **connection_params):
         # use the 'orcl_client_path' path from configuration file
         # since the 64bit client is kept in that location
-        cx_Oracle.init_oracle_client(lib_dir=db_conf.ora_client_config['orcl_client_path'])
+        cx_oracle.init_oracle_client(lib_dir=db_conf.ora_client_config['orcl_client_path'])
         # get the client version and assign it to initialization attribute
-        self.client_version = cx_Oracle.clientversion()
+        self.client_version = cx_oracle.clientversion()
         # assign the user provided db_user to initialization method, for reuse across all methods
         self.db_user = connection_params.get('user')
         # assign the user provided db_password to initialization method, for reuse across all methods
@@ -47,7 +47,7 @@ class CustomCxOracle:
         be created. This allows different credentials to be used each time a connection is acquired from the pool with 
         acquire(). This approach makes the class more flexible to be used with different instantiated objects
         '''
-        self.pool = cx_Oracle.SessionPool(dsn=self.connection_dsn, homogeneous=False)
+        self.pool = cx_oracle.SessionPool(dsn=self.connection_dsn, homogeneous=False)
         try:
             '''
             When a heterogeneous pool is created by setting homogeneous to False and no credentials are supplied during pool
@@ -55,7 +55,7 @@ class CustomCxOracle:
             '''
             self.db_auto_connect = self.pool.acquire(user=self.db_user, password=self.db_password)
         # In Case Database Error occurs
-        except cx_Oracle.DatabaseError as _errors:
+        except cx_oracle.DatabaseError as _errors:
             # Capture the errors in a variable
             _error, = _errors.args
             # The corresponding error code is loaded in to _error.code

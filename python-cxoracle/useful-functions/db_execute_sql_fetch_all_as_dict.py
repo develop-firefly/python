@@ -1,7 +1,9 @@
-# Method to execute a sql query or a query stored in a variable & fetch all results
-# Argument to this method is: SQL Query or Variable containing the SQL query
-# Note: Both Column names & Values are returned as a dictionary
 def db_execute_sql_fetch_all_as_dict(self, _sql_query_or_sql_variable):
+    '''
+    This method executes a sql query or a query stored in a variable
+    & fetches all results as a dictionary
+    Argument to this method is: SQL Query or Variable containing the SQL query
+    Note: Both Column names & Values are returned as a dictionary'''
     # Open the cursor as 'with' so, it's automatically closed upon task completion
     with self.db_auto_connect.cursor() as cursor:
         # 'arraysize' attribute of cursor is a performance tuning parameter

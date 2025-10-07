@@ -1,7 +1,9 @@
-# Method to fetch last row of sql output
-# Argument to this method is: SQL Query or Variable containing the SQL query
-# Note: Order of the result is driven by sql query
 def db_execute_sql_fetch_last_row_as_dict_m2(self, _sql_query_or_sql_variable):
+    '''
+    Method to execute a sql query or a query stored in a variable & fetch last row of results
+    Argument to this method is: SQL Query or Variable containing the SQL query
+    Return type of this method is a dictionary
+    '''
     # Open the cursor as 'with' so, it's automatically closed upon task completion
     with self.db_auto_connect.cursor(scrollable=True) as cursor:
         '''
