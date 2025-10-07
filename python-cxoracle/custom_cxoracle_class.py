@@ -1,6 +1,6 @@
-# Import cx_Oracle package: This is Python API for Oracle DB connection and Transaction
+# Import cx_oracle package: This is Python API for Oracle DB connection and Transaction
 import sys
-import cx_Oracle
+import cx_oracle
 from tabulate import tabulate
 # Import the configuration file to read th attributes and values utilized in the class
 import db_conf
@@ -35,9 +35,9 @@ class CustomCxOracle:
 
         # use the 'orcl_client_path' path from configuration file
         # since the 64bit client is kept in that location
-        cx_Oracle.init_oracle_client(lib_dir=db_conf.ora_client_config['orcl_client_path'])
+        cx_oracle.init_oracle_client(lib_dir=db_conf.ora_client_config['orcl_client_path'])
         # get the client version and assign it to initialization attribute
-        self.client_version = cx_Oracle.clientversion()
+        self.client_version = cx_oracle.clientversion()
         # assign the user provided db_user to initialization method, for reuse across all methods
         # use _ to make this a private variable, which can be read but cannot be modified
         self._db_user = connection_params.get('user')
@@ -52,7 +52,7 @@ class CustomCxOracle:
         be created. This allows different credentials to be used each time a connection is acquired from the pool with 
         acquire(). This approach makes the class more flexible to be used with different instantiated objects
         '''
-        self.pool = cx_Oracle.SessionPool(dsn=self.connection_dsn, homogeneous=False)
+        self.pool = cx_oracle.SessionPool(dsn=self.connection_dsn, homogeneous=False)
         try:
             '''
             When a heterogeneous pool is created by setting homogeneous to False and no credentials are supplied during pool
@@ -60,7 +60,7 @@ class CustomCxOracle:
             '''
             self.db_auto_connect = self.pool.acquire(user=self._db_user, password=self.__db_password)
         # In Case Database Error occurs
-        except cx_Oracle.DatabaseError as _errors:
+        except cx_oracle.DatabaseError as _errors:
             # Capture the errors in a variable
             _error, = _errors.args
             # The corresponding error code is loaded in to _error.code
@@ -100,7 +100,7 @@ class CustomCxOracle:
             # Commit the DDL
             self.db_commit()
         # In Case Database Error occurs
-        except cx_Oracle.DatabaseError as _errors:
+        except cx_oracle.DatabaseError as _errors:
             # Capture the errors in a variable
             _error, = _errors.args
             # The corresponding error code is loaded in to _error.code
@@ -965,13 +965,13 @@ class CustomCxOracle:
         Method to create a privileged connection as SYSDBA
         Arguments to this method: Keyword Argument defined in db_conf as privileged_user
         '''
-        self.client_version = cx_Oracle.clientversion()
+        self.client_version = cx_oracle.clientversion()
         # username, password and dsn are read from the db_conf file
-        # mode=cx_Oracle.SYSDBA is the key aspect for this privileged connection
-        # Special note: Do not convert cx_Oracle.SYSDBA to str(cx_Oracle.SYSDBA), since cx_Oracle.SYSDBA results to 2
-        # and cx_Oracle expects the value to be an integer
-        sysdba_conn = cx_Oracle.connect(**privileged_creds)
-        # return type of this method is a cx_Oracle connection object
+        # mode=cx_oracle.SYSDBA is the key aspect for this privileged connection
+        # Special note: Do not convert cx_oracle.SYSDBA to str(cx_oracle.SYSDBA), since cx_oracle.SYSDBA results to 2
+        # and cx_oracle expects the value to be an integer
+        sysdba_conn = cx_oracle.connect(**privileged_creds)
+        # return type of this method is a cx_oracle connection object
         return sysdba_conn
 
     def db_release_conn_to_pool(self):
@@ -1032,13 +1032,13 @@ class CustomCxOracle:
             3. Input to this function are two parameters (type) "String" and (object_name) "Table name"
             '''
             try:
-                asserted_table_name = cursor.callfunc('sys.dbms_assert.sql_object_name', cx_Oracle.STRING, [table_name])
+                asserted_table_name = cursor.callfunc('sys.dbms_assert.sql_object_name', cx_oracle.STRING, [table_name])
                 # Pass the asserted table name as variable to _sql_query
                 _sql_query = f'Select count(1) from {asserted_table_name}'
                 # Fetch only first item from the cursor in to results
                 execute = cursor.execute(_sql_query).fetchone()
                 return execute[0]
-            except cx_Oracle.DatabaseError as _errors:
+            except cx_oracle.DatabaseError as _errors:
                 _error, = _errors.args
                 if _error.code == 44002:
                     return 'Invalid SQL Object Name, Please verify Object Name provided....'
