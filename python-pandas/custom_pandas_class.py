@@ -553,6 +553,7 @@ class CustomPandas:
         else:
             print('Column Names must be in a list')
 
+
     def get_specific_cell_val_based_on_row_num_col_name(self, _row_idx, _col_name):
         '''
         Method to get a cell value based on row index and column name
@@ -574,12 +575,14 @@ class CustomPandas:
         '''
         return [_ for _ in self.my_df.itertuples()][_pandas_row_idx]
 
+
     def get_unique_value_count_in_col(self, _col_name):
         '''
         Method to get count of unique items in a given column
         Input Argument: - Column name
         '''
         return self.my_df[_col_name].nunique()
+
 
     def prefix_delim(self, _tgt_col_name, _delim):
         '''
@@ -588,12 +591,14 @@ class CustomPandas:
         '''
         self.my_df[_tgt_col_name] = _delim + self.my_df[_tgt_col_name].astype(str)
 
+
     def reset_to_default_int_idx(self):
         '''
         Method to reset the index to default integer values
         Input Argument: - None
         '''
         return self.my_df.reset_index()
+
 
     def rename_col(self, _old_col_name, _new_col_name):
         '''
@@ -606,6 +611,7 @@ class CustomPandas:
             self.my_df = self.my_df.rename(columns={_old_col_name: _new_col_name})
         except KeyError:
             print(f' Column Name :- "{_old_col_name}" not found in the dataframe')
+
 
     def rename_multiple_cols(self, _old_col_name_iterable, _new_col_name_iterable):
         '''
@@ -624,12 +630,14 @@ class CustomPandas:
                 # so that changes are reflected in spreadsheet
                 self.my_df = self.my_df.rename(columns={str(_ocv): str(_ncv)})
 
+
     def suffix_delim(self, _tgt_col_name: str, _delim: str):
         '''
         Method to add a delimiter as suffix
         Note:- This was added for understanding, however their are pre-built functions in pandas for this task
         '''
         self.my_df[_tgt_col_name] = self.my_df[_tgt_col_name].astype(str) + _delim
+
 
     def save_df_same_tgt(self):
         '''
@@ -644,6 +652,7 @@ class CustomPandas:
         elif self.my_filename.split('.')[-1] == 'csv':
             return self.my_df.to_csv(self.my_filename, index=False)
 
+
     def save_df_diff_tgt(self, _tgt_file_name: str):
         '''
         Method to save the dataframe to a different file
@@ -656,12 +665,14 @@ class CustomPandas:
         elif self.my_filename.split('.')[-1] == 'csv':
             return self.my_df.to_csv(_tgt_file_name, index=False)
 
+
     def set_col_as_index(self, _col_name: str):
         '''
         Method to set a column as the index column
         Input Argument: - Column name which needs to be set as index
         '''
         return self.my_df.set_index(_col_name)
+
 
     def value_frequency_in_col_by_idx(self, _col_idx: int):
         '''
@@ -670,9 +681,11 @@ class CustomPandas:
         '''
         return self.my_df[self.my_df_col_idx_name[_col_idx]].value_counts()
 
+
     def value_frequency_in_col_by_name(self, _col_name: str):
         '''
         Method to get frequency of occurrences per unique item in a given column
         Input Argument: - Column index position
         '''
         return self.my_df[_col_name].value_counts()
+    
