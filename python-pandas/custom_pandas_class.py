@@ -402,8 +402,7 @@ class CustomPandas:
         '''
         return self.my_df.head(10)
 
-    # Method to see df sample - Bottom 10 rows
-    # No Arguments for this method
+
     def df_sampling_bottom_10_rows(self):
         '''
         Method to see df sample - Bottom 10 rows
@@ -411,8 +410,7 @@ class CustomPandas:
         '''
         return self.my_df.tail(10)
 
-    # Method to get the column index based on column name
-    # Input Argument:: - Column name
+
     def get_col_idx_by_name(self, _col_name):
         ''' 
         Method to get the column index based on column name
@@ -422,8 +420,7 @@ class CustomPandas:
         # get_loc will get the index of the column
         return self.my_df.columns.get_loc(_col_name)
 
-    # Method to get the unique values from a given column index position
-    # Input Argument:: - Column Index
+
     def get_col_unique_values_by_idx(self, _col_idx):
         '''
         Method to get the unique values from a given column
@@ -432,8 +429,7 @@ class CustomPandas:
         # Return type is dependent on column values
         return self.my_df[self.my_df_col_idx_name[_col_idx]].unique()
 
-    # Method to get the unique values from a given column
-    # Input Argument:: - Column name
+
     def get_col_unique_values_by_name(self, _col_name):
         ''' 
         Method to get the unique values from a given column
@@ -442,8 +438,7 @@ class CustomPandas:
         # Return type is dependent on column values
         return self.my_df[_col_name].unique()
 
-    # Method to get the values from a given column index position
-    # Return type is dependent on column values
+
     def get_col_values_by_idx(self, _col_idx):
         '''
         Method to get the values from a given column
