@@ -1,6 +1,6 @@
-# Import cx_oracle package: This is Python API for Oracle DB connection and Transaction
+cx_Oracle# Import cx_Oracle package: This is Python API for Oracle DB connection and Transaction
 import sys
-import cx_oracle
+import cx_Oracle
 from tabulate import tabulate
 # Import the configuration file to read th attributes and values utilized in the class
 import db_conf
@@ -8,6 +8,102 @@ import db_conf
 
 # Class definitions should use CamelCase convention based on pep-8 guidelines
 class CustomCxOracle:
+    """
+    CustomCxOracle
+    A custom wrapper class for cx_Oracle to simplify and standardize Oracle database operations, including connection pooling, error handling, and flexible result formatting.
+    Class Variables:
+    ---------------
+    _oracle_error_map : dict
+        Maps Oracle error codes to human-readable messages.
+    Initialization:
+    ---------------
+    __init__(**connection_params: dict)
+        Initializes Oracle client, sets up connection pool, and acquires a database connection.
+    Methods:
+    --------
+    chk_db_object_existence(db_schema_name, db_obj_name)
+        Checks existence of a database object in a given schema.
+    create_db_object_auto_commit(_sql_query_or_sql_variable)
+        Executes a CREATE statement and commits changes, handling object existence errors.
+    db_close_conn_pool()
+        Closes the connection pool.
+    db_commit()
+        Commits the current transaction.
+    db_cursor_close()
+        Closes the current cursor.
+    db_cursor_open()
+        Opens a new cursor for manual operations.
+    db_disconnect()
+        Closes the database connection.
+    db_execute_qry_fetch_specific_row_as_dict(_sql_query_or_sql_variable, _row_idx)
+        Fetches a specific row from a query result as a dictionary.
+    db_execute_sql_as_sysdba(_sql_query_or_sql_variable)
+        Executes SQL as SYSDBA and returns all results.
+    db_execute_sql_fetch_all_as_dict(_sql_query_or_sql_variable)
+        Executes SQL and fetches all results as a list of dictionaries.
+    db_execute_sql_fetch_all_as_list(_sql_query_or_sql_variable)
+        Executes SQL and fetches all results as a list of lists.
+    db_execute_sql_fetch_all_as_set(_sql_query_or_sql_variable)
+        Executes SQL and fetches all results as a list of sets.
+    db_execute_sql_fetch_all_as_tuples(_sql_query_or_sql_variable)
+        Executes SQL and fetches all results as a list of tuples.
+    db_execute_sql_fetch_last_row_as_dict_m2(_sql_query_or_sql_variable)
+        Fetches the last row of a query result as a dictionary.
+    db_execute_sql_fetch_last_row_as_list_m2(_sql_query_or_sql_variable)
+        Fetches the last row of a query result as a list.
+    db_execute_sql_fetch_last_row_as_set_m2(_sql_query_or_sql_variable)
+        Fetches the last row of a query result as a set.
+    db_execute_sql_fetch_last_row_as_tuples_m2(_sql_query_or_sql_variable)
+        Fetches the last row of a query result as a tuple.
+    db_execute_sql_fetch_specific_num_of_rows_as_dict(_sql_query_or_sql_variable, _num_of_rows)
+        Fetches a specific number of rows as a list of dictionaries.
+    db_execute_sql_fetch_specific_num_of_rows_as_list(_sql_query_or_sql_variable, _num_of_rows)
+        Fetches a specific number of rows as a list of lists.
+    db_execute_sql_fetch_specific_num_of_rows_as_set(_sql_query_or_sql_variable, _num_of_rows)
+        Fetches a specific number of rows as a list of sets.
+    db_execute_sql_fetch_specific_num_of_rows_as_tuples(_sql_query_or_sql_variable, _num_of_rows)
+        Fetches a specific number of rows as a list of tuples.
+    db_execute_sql_fetch_top_row_as_tuples_m1(_sql_query_or_sql_variable)
+        Fetches the first row of a query result as a tuple.
+    db_execute_sql_fetch_top_row_as_list_m1(_sql_query_or_sql_variable)
+        Fetches the first row of a query result as a list.
+    db_execute_sql_fetch_top_row_as_set_m1(_sql_query_or_sql_variable)
+        Fetches the first row of a query result as a set.
+    db_execute_sql_fetch_top_row_as_dict_m1(_sql_query_or_sql_variable)
+        Fetches the first row of a query result as a dictionary.
+    db_execute_sql_fetch_top_row_as_tuples_m2(_sql_query_or_sql_variable)
+        Fetches the first row of a query result as a tuple (using scrollable cursor).
+    db_execute_sql_fetch_top_row_as_list_m2(_sql_query_or_sql_variable)
+        Fetches the first row of a query result as a list (using scrollable cursor).
+    db_execute_sql_fetch_top_row_as_set_m2(_sql_query_or_sql_variable)
+        Fetches the first row of a query result as a set (using scrollable cursor).
+    db_execute_sql_fetch_top_row_as_dict_m2(_sql_query_or_sql_variable)
+        Fetches the first row of a query result as a dictionary (using scrollable cursor).
+    db_execute_sql_fetch_specific_row_as_list(_sql_query_or_sql_variable, _row_idx)
+        Fetches a specific row as a list.
+    db_execute_sql_fetch_specific_row_as_set(_sql_query_or_sql_variable, _row_idx)
+        Fetches a specific row as a set.
+    db_execute_sql_fetch_specific_row_as_tuples(_sql_query_or_sql_variable, _row_idx)
+        Fetches a specific row as a tuple.
+    db_sys_privileged_conn(**privileged_creds: dict)
+        Creates a privileged SYSDBA connection.
+    db_release_conn_to_pool()
+        Releases the current connection back to the pool.
+    db_print_tabular_data(_sql_query_or_sql_variable)
+        Prints query results in tabular format using the tabulate library.
+    db_get_row_cnt_of_table(table_name)
+        Returns the row count of a specified table.
+    db_get_column_names_of_table_by_sql_qry(_sql_query_or_sql_variable)
+        Returns column names for a given SQL query.
+    db_version()
+        Returns the version of the connected Oracle database.
+    Notes:
+    ------
+    - All methods are designed for use with Oracle databases via cx_Oracle.
+    - Error handling is standardized using the _oracle_error_map.
+    - Result formatting is flexible: supports dict, list, set, tuple, and tabular output.
+    - Connection pooling and manual connection management are supported.
+    """
 
     # Create an Error Code Map as Class Variable to be used in any of the custom methods
     _oracle_error_map = {955: 'Table Already Exists',
@@ -35,9 +131,9 @@ class CustomCxOracle:
 
         # use the 'orcl_client_path' path from configuration file
         # since the 64bit client is kept in that location
-        cx_oracle.init_oracle_client(lib_dir=db_conf.ora_client_config['orcl_client_path'])
+        cx_Oracle.init_oracle_client(lib_dir=db_conf.ora_client_config['orcl_client_path'])
         # get the client version and assign it to initialization attribute
-        self.client_version = cx_oracle.clientversion()
+        self.client_version = cx_Oracle.clientversion()
         # assign the user provided db_user to initialization method, for reuse across all methods
         # use _ to make this a private variable, which can be read but cannot be modified
         self._db_user = connection_params.get('user')
@@ -52,7 +148,7 @@ class CustomCxOracle:
         be created. This allows different credentials to be used each time a connection is acquired from the pool with 
         acquire(). This approach makes the class more flexible to be used with different instantiated objects
         '''
-        self.pool = cx_oracle.SessionPool(dsn=self.connection_dsn, homogeneous=False)
+        self.pool = cx_Oracle.SessionPool(dsn=self.connection_dsn, homogeneous=False)
         try:
             '''
             When a heterogeneous pool is created by setting homogeneous to False and no credentials are supplied during pool
@@ -60,7 +156,7 @@ class CustomCxOracle:
             '''
             self.db_auto_connect = self.pool.acquire(user=self._db_user, password=self.__db_password)
         # In Case Database Error occurs
-        except cx_oracle.DatabaseError as _errors:
+        except cx_Oracle.DatabaseError as _errors:
             # Capture the errors in a variable
             _error, = _errors.args
             # The corresponding error code is loaded in to _error.code
@@ -100,7 +196,7 @@ class CustomCxOracle:
             # Commit the DDL
             self.db_commit()
         # In Case Database Error occurs
-        except cx_oracle.DatabaseError as _errors:
+        except cx_Oracle.DatabaseError as _errors:
             # Capture the errors in a variable
             _error, = _errors.args
             # The corresponding error code is loaded in to _error.code
@@ -965,13 +1061,13 @@ class CustomCxOracle:
         Method to create a privileged connection as SYSDBA
         Arguments to this method: Keyword Argument defined in db_conf as privileged_user
         '''
-        self.client_version = cx_oracle.clientversion()
+        self.client_version = cx_Oracle.clientversion()
         # username, password and dsn are read from the db_conf file
-        # mode=cx_oracle.SYSDBA is the key aspect for this privileged connection
-        # Special note: Do not convert cx_oracle.SYSDBA to str(cx_oracle.SYSDBA), since cx_oracle.SYSDBA results to 2
-        # and cx_oracle expects the value to be an integer
-        sysdba_conn = cx_oracle.connect(**privileged_creds)
-        # return type of this method is a cx_oracle connection object
+        # mode=cx_Oracle.SYSDBA is the key aspect for this privileged connection
+        # Special note: Do not convert cx_Oracle.SYSDBA to str(cx_Oracle.SYSDBA), since cx_Oracle.SYSDBA results to 2
+        # and cx_Oracle expects the value to be an integer
+        sysdba_conn = cx_Oracle.connect(**privileged_creds)
+        # return type of this method is a cx_Oracle connection object
         return sysdba_conn
 
     def db_release_conn_to_pool(self):
@@ -1032,13 +1128,13 @@ class CustomCxOracle:
             3. Input to this function are two parameters (type) "String" and (object_name) "Table name"
             '''
             try:
-                asserted_table_name = cursor.callfunc('sys.dbms_assert.sql_object_name', cx_oracle.STRING, [table_name])
+                asserted_table_name = cursor.callfunc('sys.dbms_assert.sql_object_name', cx_Oracle.STRING, [table_name])
                 # Pass the asserted table name as variable to _sql_query
                 _sql_query = f'Select count(1) from {asserted_table_name}'
                 # Fetch only first item from the cursor in to results
                 execute = cursor.execute(_sql_query).fetchone()
                 return execute[0]
-            except cx_oracle.DatabaseError as _errors:
+            except cx_Oracle.DatabaseError as _errors:
                 _error, = _errors.args
                 if _error.code == 44002:
                     return 'Invalid SQL Object Name, Please verify Object Name provided....'
