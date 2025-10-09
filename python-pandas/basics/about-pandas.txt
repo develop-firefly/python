@@ -1,0 +1,27 @@
+1.  Pandas is an open-source Python Library for Data Analysis
+2.  Pandas is derived from the term 'PANel DAta'
+3.  Panel Data - Is a term used in statistics and econometrics, which represents data in the form of row or columns
+
+Capabilities of Pandas:
+1.  Reading and writing various forms of data suchas CSV Files, TSV Files, Text Files, Excel Files etc.
+2.  Handling Missing Data
+3.  Indexing, Slicing
+4.  Group by operations
+5.  Merging & Joining of data sets
+
+
+Pandas Datastructures
+1.  Pandas Series   :   
+    a.  One Dimensional labelled Array
+    b.  It can hold any data type
+    c.  It can be considered as a column in excel sheet or a column of a table in a database
+    d.  Pandas Series object is created using Series Class constructor
+
+    # Operations that are included in pandas Series include:
+        1.  Add element to a Series
+        2.  remove an element by position
+        3.  remove an element by key
+        4.  retrieve a range of rows
+        5.  retrieve rows based on a condition
+
+2.  Pandas Dataframe:   Two Dimensional Array; Column Data can be of heterogeneous type; Collection of records
