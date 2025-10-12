@@ -3,6 +3,8 @@ import shutil
 def get_disk_info():
     '''
     Method to get disk information
+    Input: None
+    Output: disk information in a dictionary format
     '''
     # Capture the disk usage in three different variable (Note these are in bytes)
     total_b, used_b, available_b = shutil.disk_usage('.')
