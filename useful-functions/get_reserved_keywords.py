@@ -2,7 +2,9 @@
 from keyword import kwlist
 
 def reserved_keywords():
-    ''' Function to get the list of reserved keywords in Python3'''
+    ''' 
+    Function to get the list of reserved keywords in Python3
+    '''
     return kwlist
 
 

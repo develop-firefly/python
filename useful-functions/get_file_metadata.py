@@ -3,10 +3,10 @@ from time import ctime
 import os
 
 def get_file_metadata(self):
-    ''' Function to get the file metadata like
-    File name, File owner username, File owner full name,
-    Created time, Accessed time, Modified time
+    ''' 
+    Method to get the file metadata like File name, File owner username, File owner full name, Created time, Accessed time, Modified time
     Input: Filename
+    Output: Dictionary with the above mentioned metadata
     '''
     file_metadata = {'File_Name': self.my_filename,
                  'File_Owner_username': getpwuid(os.stat(self.my_filename).st_uid).pw_name,
