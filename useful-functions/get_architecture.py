@@ -4,6 +4,8 @@ import platform
 def get_architecture():
     ''' 
     Method to get the architectural informartion of the machine
+    Input: None
+    Output: Architecture information as a string
     '''
     # The 'machine' method provides the architectural information of the local machine
     return platform.machine()
