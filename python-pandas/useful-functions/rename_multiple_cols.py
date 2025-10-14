@@ -1,8 +1,9 @@
 def rename_multiple_cols(self, _old_col_name_iterable, _new_col_name_iterable):
     '''
     Method to rename multiple columns at once
-    Input Arguments: - Two iterables, first with the old column names
-    And second with the new column names
+    Input:1 - Two iterables, first with the old column names
+    Input:2 - And second with the new column names
+    Output: - None
     '''
     # The length of both the iterables must be same
     # Same number of column names in the list for replacement
