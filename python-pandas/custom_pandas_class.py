@@ -153,7 +153,8 @@ class CustomPandas:
     def add_col_at_end(self, _col_name: str):
         '''
         Method to add a new column at the end of the dataframe
-        Input Argument: A Column name of user choice
+        Input: A Column name of user choice
+        Output: Dataframe with new column added at the end
         '''
         # The following statement checks if the user provided column name already exists in the dataframe or not
         # The new column will only be added if it does not exist already
@@ -168,7 +169,8 @@ class CustomPandas:
     def add_col_by_idx(self, position: int, _col_name: str):
         '''
         Method to add a new column at user defined position in the dataframe
-        Input Argument: Position where the column needs to be added and a Column name of user choice
+        Input: Position where the column needs to be added and a Column name of user choice
+        Output: Dataframe with new column added at user defined position
         '''
         # The following statement checks if the user provided column name already exists in the dataframe or not
         # The new column will only be added if it does not exist already
@@ -182,7 +184,8 @@ class CustomPandas:
     def add_cols_at_end(self, _col_names: list):
         '''
         Method to add multiple columns at the end of the dataframe
-        Input Argument: A list of Column names of user choice
+        Input: A list of Column names of user choice
+        Output: Dataframe with new columns added at the end
         '''
         # following line will add the new columns, only if they do not exist already
         # The list comprehension provides the string of column names
@@ -194,8 +197,9 @@ class CustomPandas:
     def copy_paste_cols_data(self, _src_col_name: str, _tgt_col_name: str):
         ''' 
         Method to copy the contents from one column to another column of dataframe
-        Input Argument: - Source column name and Target column name
+        Input: - Source column name and Target column name
         Note: - This method uses a try: except block to deal with scenarios where the source column does not exist
+        Output: - Dataframe with copied data in the target column
         '''
         # NOTE: - If target col does not exist in the dataframe, it will be created at run time
         try:
@@ -207,8 +211,9 @@ class CustomPandas:
     def create_df_from_excel_specific_ws(self, _ws_name: str):
         ''' 
         Method to create dataframe from specific sheet in excel
-        Input Argument: - Worksheet name
+        Input: - Worksheet name
         Note: - This method assumes that the file provided during class initialization is an excel file
+        Output: - Dataframe created from the specific worksheet
         '''
         # read the excel file provided with the sheet_name parameter
         # keep_default_na = False, this stops null cells with being filed with N/A
@@ -222,8 +227,9 @@ class CustomPandas:
     def create_df_from_dataset(self, _dataset):
         ''' 
         Method to create a dataframe from a dataset
-        Input Argument: - A dataset in the form of list of lists or list of dictionaries
+        Input: - A dataset in the form of list of lists or list of dictionaries
         Note: - This method assumes that the dataset provided is clean and does not have any structural issues
+        Output: - Dataframe created from the dataset
         '''
         # create a dataframe using the user provided dataset
         self.my_df = pd.DataFrame(_dataset)
@@ -234,7 +240,8 @@ class CustomPandas:
     def create_df_from_filtered_data_single_in_condition(self, _column_name: str, _condition):
         '''
         Method to create dataframe with based on one condition at column level
-        Input Argument: - Column name where condition is to be applied, and the condition itself
+        Input: - Column name where condition is to be applied, and the condition itself
+        Output: - Dataframe with filtered data based on single in condition
         '''
         # create a new filtered dataset based on the condition applied on the column
         _filtered_data_set = (self.my_df.loc[self.my_df[_column_name] == _condition])
@@ -245,7 +252,8 @@ class CustomPandas:
     def create_df_from_filtered_data_single_not_in_condition(self, _column_name: str, _condition):
         '''
         Method to create dataframe with based on one condition at column level
-        Input Argument: - Column name where condition is to be applied, and the condition itself
+        Input: - Column name where condition is to be applied, and the condition itself
+        Output: - Dataframe with filtered data based on single not in condition
         '''
         # create a new filtered dataset based on the condition applied on the column
         _filtered_data_set = (self.my_df.loc[self.my_df[_column_name] != _condition])
@@ -256,9 +264,10 @@ class CustomPandas:
     def create_df_from_filtered_data_multiple_and_conditions(self, _col_names: str, _conditions):
         ''' 
         Method to create dataframe with based on multiple and conditions
-        Input Argument: _col_names should preferably be a list
-        Input Argument: _conditions should preferably be a list   
+        Input:1 _col_names should preferably be a list
+        Input:2 _conditions should preferably be a list   
         Do not convert is to a static method
+        Output: - Dataframe with filtered data based on multiple and conditions
         '''
         try:
             if len(_col_names) == len(_conditions):
@@ -275,10 +284,11 @@ class CustomPandas:
     def create_df_from_filtered_data_multiple_or_conditions(self, _col_names, _conditions):
         '''
         Method to create dataframe with based on multiple or conditions
-        Input Argument: _col_names should preferably be a list
-        Input Argument: _conditions should preferably be a list
+        Input:1 _col_names should preferably be a list
+        Input:2 _conditions should preferably be a list
         It has to be a 1:1 mapping of _col_name and condition and is sequence sensitive
         Do not convert is to a static method
+        Output: - Dataframe with filtered data based on multiple or conditions
         '''
         try:
             if len(_col_names) == len(_conditions):
@@ -296,6 +306,8 @@ class CustomPandas:
         '''
         Method to remove a column from the dataframe
         Note: This method is build using a try: except block to deal with spelling mistakes in column name
+        Input: - Column name
+        Output: - None
         '''
         try:
             self.my_df.drop(_col_name, axis=1, inplace=True)
@@ -309,6 +321,8 @@ class CustomPandas:
         '''
         Method to remove a column from the dataframe using its existing position
         Note: This method is build using a try: except block to deal with index out of bounds exception
+        Input: - Column index position
+        Output: - None
         '''
         try:
             self.my_df.drop(self.my_df.columns[_col_idx], axis=1, inplace=True)
@@ -330,12 +344,12 @@ class CustomPandas:
     def df_sort_row_level_same_col(self, _col_name, _delim, _sort_type, _str_join_param):
         '''
         Method to sort data in a column at row level (basically each cell of a column
-
-        Column Name:- Where Data Needs to be sorted
-        _delim:- The current delimiter of the dataset in the cell
-        _sort_type:- Can be 'asc' or 'desc
-        _str_join_param:- User provided _delim to join the strings
+        Input:1 - Column Name:- Where Data Needs to be sorted
+        Input:2 - _delim:- The current delimiter of the dataset in the cell
+        Input:3 - _sort_type:- Can be 'asc' or 'desc
+        Input:4 - _str_join_param:- User provided _delim to join the strings
         Important Note:- For this method to provide results, the column name in question must have data in it
+        Output:- Dataframe with sorted data in the same column
         '''
         # The for loop will run for the number of rows in the dataframe
         for item in range(0, self.my_df.shape[0]):
@@ -359,12 +373,13 @@ class CustomPandas:
         '''
         Method to sort data in a column at row level (basically each cell of a column)
         It has five arguments
-        source column name:- The columns which has the unsorted data
-        target column name:- The column where sorted data will be written
-        _delim:- The current delimiter of the dataset in the cell
-        _sort_type:- Can be 'asc' or 'desc
-        _str_join_param:- User provided _delim to join the strings
+        Input:1 - source column name:- The columns which has the unsorted data
+        Input:2 - target column name:- The column where sorted data will be written
+        Input:3 - _delim:- The current delimiter of the dataset in the cell
+        Input:4 - _sort_type:- Can be 'asc' or 'desc
+        Input:5 - _str_join_param:- User provided _delim to join the strings
         Important Note:- This method can take care of both sorting and writing the data and avoids the need of copying the data to target column before sorting
+        Output:- Dataframe with sorted data in the target column
         '''
         for item in range(0, self.my_df[_src_col_name].shape[0]):
             if _sort_type == 'asc':
@@ -386,7 +401,8 @@ class CustomPandas:
         '''
         Method to standardize delimiter for scenarios where the dataset needs curation
         If the dataset has different delimiters
-        Input Argument:- Column name and the delimiter which needs to be standardized
+        Input:- Column name and the delimiter which needs to be standardized
+        Output:- Dataframe with standardized delimiter in the column
         '''
         to_replace = [", ", ",", "'", "; ", " ; ", " ", "\\", ";;", "-", "/", ",;"]
         for item in to_replace:
@@ -398,7 +414,8 @@ class CustomPandas:
     def df_sampling_top_10_rows(self):
         '''
         Method to see df sample - Top 10 rows
-        Input Argument: - None
+        Input: - None
+        Output: - Dataframe with top 10 rows
         '''
         return self.my_df.head(10)
 
@@ -406,7 +423,8 @@ class CustomPandas:
     def df_sampling_bottom_10_rows(self):
         '''
         Method to see df sample - Bottom 10 rows
-        Input Argument: - None
+        Input: - None
+        Output: - Dataframe with bottom 10 rows
         '''
         return self.my_df.tail(10)
 
@@ -414,7 +432,8 @@ class CustomPandas:
     def get_col_idx_by_name(self, _col_name):
         ''' 
         Method to get the column index based on column name
-        Input Argument:: - Column name
+        Input: - Column name
+        Output: - Column index
         '''
         # return type is integer
         # get_loc will get the index of the column
@@ -424,7 +443,8 @@ class CustomPandas:
     def get_col_unique_values_by_idx(self, _col_idx):
         '''
         Method to get the unique values from a given column
-        Input Argument:: - Column Index
+        Input: - Column Index
+        Output: - Numpy Array
         '''
         # Return type is dependent on column values
         return self.my_df[self.my_df_col_idx_name[_col_idx]].unique()
@@ -433,7 +453,8 @@ class CustomPandas:
     def get_col_unique_values_by_name(self, _col_name):
         ''' 
         Method to get the unique values from a given column
-        Input Argument:: - Column name
+        Input: - Column name
+        Output: - Numpy Array
         '''
         # Return type is dependent on column values
         return self.my_df[_col_name].unique()
@@ -442,7 +463,8 @@ class CustomPandas:
     def get_col_values_by_idx(self, _col_idx):
         '''
         Method to get the values from a given column
-        Input Argument:: - Column index position
+        Input: - Column index position
+        Output: - Pandas Series
         '''
         return self.my_df[self.my_df_col_idx_name[_col_idx]]
 
@@ -450,7 +472,8 @@ class CustomPandas:
     def get_col_values_by_name_m1(self, _col_name):
         '''
         Method to get the values from a given column
-        Input Argument:: - Column name
+        Input: - Column name
+        Output: - Pandas Series
         '''
         # Return type is dependent on column values
         return self.my_df[_col_name]
@@ -459,7 +482,8 @@ class CustomPandas:
     def get_col_values_by_name_m2(self, _col_name):
         '''
         Method to get the values from a given column
-        Input Argument:: - Column name
+        Input: - Column name
+        Output: - Pandas Series
         '''
         # Return type is dependent on column values
         return self.my_df.get(_col_name)
@@ -468,7 +492,8 @@ class CustomPandas:
     def get_row_val_based_on_search_param_in_col(self, _col_name, _search_val):
         '''
         Method to get row values based on a search param in a given column name
-        Input Argument:- Column name to be searched and search value
+        Input:- Column name to be searched and search value
+        Output: - List of pandas rows where the search value was found
         '''
         _col_idx = self.get_col_idx_by_name(_col_name)
         # Return the entire row, if searched value was found in the given column
@@ -478,7 +503,8 @@ class CustomPandas:
     def get_row_idx_based_on_search_param_in_col(self, _col_name, _search_val):
         '''
         Method to get row index based on a search param in a given column name
-        Input Argument:- Column name to be searched and search value
+        Input:- Column name to be searched and search value
+        Output: - List of pandas row indexes where the search value was found
         '''
         _col_idx = self.get_col_idx_by_name(_col_name)
         # Nested list comprehension returns the pandas index from _val[0]
@@ -488,7 +514,8 @@ class CustomPandas:
     def get_specific_col_val_based_on_search_match(self, _search_col_name, _search_val, _see_val_col_name):
         '''
         Method to get values of  specific columns if search value matched in another column
-        Input Argument:- Column Name to the searched,  Value to be searched, Values to be seen
+        Input:- Column Name to the searched,  Value to be searched, Values to be seen
+        Output: - List of values from the column to be seen
         '''
         # get the column indexes
         _search_col_idx = self.get_col_idx_by_name(_search_col_name)
@@ -499,8 +526,9 @@ class CustomPandas:
     def get_specific_row_val_based_on_cell_range(self,_row_start, _row_end, _start_col_name, _end_col_name):
         '''
         Method to get values from specific rows based on a cell range (inclusive of ending row and column)
-        Input Argument:- starting row index, ending row index,
+        Input:- starting row index, ending row index,
         Starting column name and Ending column name
+        Output: - Dataframe with selected rows and columns
         '''
         # Get the index based on the starting column name
         _start_col_idx = self.get_col_idx_by_name(_start_col_name)
@@ -518,8 +546,9 @@ class CustomPandas:
     def get_specific_row_val_based_on_row_range(self, _row_start, _row_end):
         '''
         Method to get values from specific rows based on a row range (inclusive of ending row)
-        Input Argument:- starting row index and ending row index
+        Input:- starting row index and ending row index
         Note: - All column values will be fetched by this method
+        Output: - Dataframe with all columns and selected rows
         '''
         # Ending row index must be greater than the starting row index
         if _row_end > _row_start:
@@ -534,8 +563,9 @@ class CustomPandas:
     def get_specific_row_col_val_based_on_row_range(self, _row_start, _row_end, _col_names_list):
         '''
         Method to get values from specific rows based on a row range for selected columns (inclusive of ending row)
-        Input Argument:- starting row index, ending row index and list with column names
+        Input:- starting row index, ending row index and list with column names
         Only selected columns will be printed based on the column names provided
+        Output: - Dataframe with selected columns and rows
         '''
         # The columns name(s) provided should be in a list, other iterable methods will not work
         if isinstance(_col_names_list, list):
@@ -557,8 +587,9 @@ class CustomPandas:
     def get_specific_cell_val_based_on_row_num_col_name(self, _row_idx, _col_name):
         '''
         Method to get a cell value based on row index and column name
-        Input Argument:- Row index and Column name
+        Input:- Row index and Column name
         Note: Only a single cell value will be returned, since the intersection is a row and column index
+        Output: - Value of the cell
         '''
         # loc allows accessing columns by name
         # iloc allows accessing columns by their index
@@ -569,9 +600,11 @@ class CustomPandas:
     def get_row_val_by_row_idx(self, _pandas_row_idx):
         '''
         Method to get row values based on pandas row index
-        Input Argument: - Row index of the pandas dataframe
+        Input: - Row index of the pandas dataframe
         Note: Pandas row index is 2 + excel row index, since header row index is 0. 
         Pandas excludes the header row for df and starts with 0 for the first value row
+        Output: - A named tuple with all the column values for the given row index
+        1st item in the tuple is the pandas row index
         '''
         return [_ for _ in self.my_df.itertuples()][_pandas_row_idx]
 
@@ -579,7 +612,9 @@ class CustomPandas:
     def get_unique_value_count_in_col(self, _col_name):
         '''
         Method to get count of unique items in a given column
-        Input Argument: - Column name
+        Input: - Column name
+        Output: - Integer value of unique items in the column
+        Note: - This method uses pandas nunique() function
         '''
         return self.my_df[_col_name].nunique()
 
@@ -588,6 +623,8 @@ class CustomPandas:
         '''
         Method to add a delimiter as prefix
         Note:- This was added for understanding, however their are pre-built functions in pandas for this task
+        Input: - Target column name and the delimiter
+        Output: - Dataframe with the delimiter added as prefix
         '''
         self.my_df[_tgt_col_name] = _delim + self.my_df[_tgt_col_name].astype(str)
 
@@ -595,7 +632,7 @@ class CustomPandas:
     def reset_to_default_int_idx(self):
         '''
         Method to reset the index to default integer values
-        Input Argument: - None
+        Input: - None
         '''
         return self.my_df.reset_index()
 
@@ -603,7 +640,9 @@ class CustomPandas:
     def rename_col(self, _old_col_name, _new_col_name):
         '''
         Method to rename an existing column
-        Input Argument:- Old column name and New Column Name
+        Input:- Old column name and New Column Name
+        Output:- renamed column in a dataframe
+        Note:- This method uses a try: except block to deal with scenarios where the old column
         '''
         try:
             # Assign the renamed columns to original dataframe
@@ -616,7 +655,8 @@ class CustomPandas:
     def rename_multiple_cols(self, _old_col_name_iterable, _new_col_name_iterable):
         '''
         Method to rename multiple columns at once
-        Input Argument:- Two iterables, first with the old column names
+        Input:- Two iterables, first with the old column names
+        Output:- renamed columns in a dataframe
         And second with the new column names
         '''
         # The length of both the iterables must be same
@@ -634,6 +674,8 @@ class CustomPandas:
     def suffix_delim(self, _tgt_col_name: str, _delim: str):
         '''
         Method to add a delimiter as suffix
+        Input: - Target column name and the delimiter
+        Output: - Dataframe with the delimiter added as suffix
         Note:- This was added for understanding, however their are pre-built functions in pandas for this task
         '''
         self.my_df[_tgt_col_name] = self.my_df[_tgt_col_name].astype(str) + _delim
@@ -642,7 +684,7 @@ class CustomPandas:
     def save_df_same_tgt(self):
         '''
         Method to save the dataframe in the same file
-        Input Argument: - None
+        Input: - None
         Based on the file extension appropriate pandas function will be called to save the data
         '''
         # If the file extension is xlsx then 'to_excel' will be called
@@ -656,7 +698,7 @@ class CustomPandas:
     def save_df_diff_tgt(self, _tgt_file_name: str):
         '''
         Method to save the dataframe to a different file
-        Input Argument: - Target file name
+        Input: - Target file name
         Based on the file extension appropriate pandas function will be called to save the data
         '''
         # If the file extension is xlsx then 'to_excel' will be called
@@ -669,7 +711,9 @@ class CustomPandas:
     def set_col_as_index(self, _col_name: str):
         '''
         Method to set a column as the index column
-        Input Argument: - Column name which needs to be set as index
+        Input: - Column name which needs to be set as index
+        Output: - Dataframe with the user defined column as index
+        Note: - This method does not change the original dataframe, it returns a new dataframe with
         '''
         return self.my_df.set_index(_col_name)
 
@@ -677,7 +721,8 @@ class CustomPandas:
     def value_frequency_in_col_by_idx(self, _col_idx: int):
         '''
         Method to get frequency of occurrences per unique item in a given column
-        Input Argument: - Column index position
+        Input: - Column index position
+        Output: - A pandas series with index as unique items and values as their frequency
         '''
         return self.my_df[self.my_df_col_idx_name[_col_idx]].value_counts()
 
@@ -685,7 +730,8 @@ class CustomPandas:
     def value_frequency_in_col_by_name(self, _col_name: str):
         '''
         Method to get frequency of occurrences per unique item in a given column
-        Input Argument: - Column index position
+        Input: - Column index position
+        Output: - A pandas series with index as unique items and values as their frequency
         '''
         return self.my_df[_col_name].value_counts()
     
