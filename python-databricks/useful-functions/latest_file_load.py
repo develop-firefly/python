@@ -19,3 +19,4 @@ def latest_file_load(path):
         if (any(_ in fd.name for _ in fgp) and fd.name.endswith('.txt')) and int(desired_ts(str_threshold_dt)[0]) <= fd.modificationTime <= int(desired_ts(str_threshold_dt)[-1]):
             # Append the filtered values to the list
             filelist.append([fd.name, fd.size, fd.path, (((spark.read.load('text', fd.path)).toPandas()).shape[0]-1)])
+    return filelist
